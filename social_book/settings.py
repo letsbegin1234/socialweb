@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+# import environ
+
+# env = environ.Env()
+
+# environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +31,8 @@ SECRET_KEY = 'django-insecure-@bnywoh#c*7)ym7vy@zuj$wbckhq8hjtvj=grl*h_c!w@(#4bb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app','.now.sh','127.0.0.1','localhost','socialweb-af6c.onrender.com']
+# ALLOWED_HOSTS = ['.vercel.app','.now.sh','127.0.0.1','localhost','socialweb-af6c.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,17 +89,29 @@ WSGI_APPLICATION = 'social_book.wsgi.application'
 #     }
 # }
 # dj_database_url.parse(os.environ.get("DATABASE_URL"))
+# DATABASES = {
+#    'default': 
+#        {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD':'llBHEPhNySFdQWumspNVOpjaEFbKVVGF',
+#         'HOST':'roundhouse.proxy.rlwy.net',
+#         'PORT': '50074',
+#     }
+# }
+
 DATABASES = {
-   'default': 
-       {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD':'llBHEPhNySFdQWumspNVOpjaEFbKVVGF',
-        'HOST':'roundhouse.proxy.rlwy.net',
-        'PORT': '50074',
-    }
+   'default':  dj_database_url.parse('postgresql://social_9snp_user:VEWXRvN86pIUAivK34wbPTGYvenlYH29@dpg-cq13j93v2p9s73clgncg-a.oregon-postgres.render.com/social_9snp')
+    #    {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'socialmedia',
+    #     'USER': 'postgres',
+    #     'PASSWORD':'1234',
+    #     'HOST':'localhost'
+    #    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -131,6 +151,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
 
+# STATIC_ROOT = BASE_DIR/'staticfiles'
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
